@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Star Wars</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      body {
+        background-image: url("https://i.pinimg.com/originals/2b/d3/8e/2bd38e31a22877a17fa63e3d771f8624.gif");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        color: rgb(241, 238, 103);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      /* #background {
+        height: 100vh;
+        width: 100vw;
+      }*/
+      body > img:nth-child(2) {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        width: 200px;
+      }
+      h1 {
+        text-align: center;
+      }
+      #container {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+      .box {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(2, 200px);
+        grid-template-rows: 200px;
+        gap: 20px;
+        justify-content: center;
+        align-content: space-around;
+      }
+      .box > div {
+        border: 1px solid rgb(241, 238, 103);
+        border-radius: 15px;
+        display: grid;
+        justify-content: center;
+        align-content: space-around;
+      }
+      .box > div:hover {
+        border: 1px solid white;
+        color: white;
+        cursor: pointer;
+      }
+      h3 {
+        width: 80px;
+        border: 1px solid rgb(241, 238, 103);
+        padding: 10px;
+        border-radius: 15px;
+        margin: 25px auto;
+      }
+      h3:hover {
+        border: 1px solid white;
+        color: white;
+        cursor: pointer;
+      }
+      body > i:first-child {
+        font-size: 50px;
+
+        position: absolute;
+        top: 25px;
+        right: 65px;
+        color: rgb(241, 238, 103);
+      }
+    </style>
+    <script
+      src="https://kit.fontawesome.com/e99a9eb445.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <i class="fa-solid fa-volume-xmark"></i>
+    <img
+      src="https://www.freepnglogos.com/uploads/star-wars-logo-png-8.png"
+      alt=""
+    />
+
+    <div id="container"></div>
+  </body>
+</html>
+<script>
+  let image = document.getElementById("image");
+  let data = JSON.parse(localStorage.getItem("heros"));
+
+  let displayData = ({
+    name,
+    birth_year,
+    gender,
+    height,
+    hair_color,
+    mass,
+    eye_color,
+  }) => {
+    document.getElementById("container").innerHTML = null;
+    let h2 = document.createElement("h1");
+    h2.innerText = name;
+    let box = document.createElement("div");
+    box.setAttribute("class", "box");
+    let div1 = document.createElement("div");
+    let h3 = document.createElement("h2");
+    h3.innerText = "Personal Info";
+    let DOB = document.createElement("p");
+    DOB.innerText = `Birth Year: ${birth_year}`;
+    let Gender = document.createElement("p");
+    Gender.innerText = `Gender: ${gender}`;
+    let Height = document.createElement("p");
+    Height.innerText = `Height: ${height}`;
+    div1.append(h3, DOB, Gender, Height);
+    let div2 = document.createElement("div");
+    let more = document.createElement("h2");
+    more.innerText = "Anatomy";
+    let Eye = document.createElement("p");
+    Eye.innerText = `Eye Color: ${eye_color}`;
+    let Mass = document.createElement("p");
+    Mass.innerText = `Mass: ${mass}`;
+    let Hair = document.createElement("p");
+    Hair.innerText = `Hair Color: ${hair_color}`;
+
+    div2.append(more, Eye, Mass, Hair);
+    box.append(div1, div2);
+    let back = document.createElement("h3");
+    back.innerText = "Go Back";
+    back.style.cursor = "pointer";
+    back.onclick = () => {
+      window.location.href = "./Star Wars.html";
+    };
+    document.getElementById("container").append(h2, box, back);
+  };
+  displayData(data);
+  let flag = true;
+  let x;
+  document.querySelector("i").addEventListener("click", () => {
+    if (flag) {
+      flag = false;
+
+      document.querySelector("i").classList.remove("fa-volume-xmark");
+
+      document.querySelector("i").classList.add("fa-volume-off");
+      x = new Audio("./starwar.mp3");
+      x.play().repeat();
+      console.log(x.play());
+    } else {
+      flag = true;
+      document.querySelector("i").classList.remove("fa-volume-off");
+
+      document.querySelector("i").classList.add("fa-volume-xmark");
+      x.pause();
+    }
+  });
+</script>

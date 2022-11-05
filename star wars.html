@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Star Wars</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      body {
+        background-image: url("https://i.pinimg.com/originals/2b/d3/8e/2bd38e31a22877a17fa63e3d771f8624.gif");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      /* #background {
+        height: 100vh;
+        width: 100vw;
+      }*/
+      body > img:nth-child(2) {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        width: 200px;
+      }
+      #searchbar {
+        top: 50%;
+        left: 25%;
+        width: 50%;
+        background-color: rgb(137, 116, 116);
+        padding: 20px;
+        border-radius: 15px;
+      }
+      #searchbar > #input {
+        width: 250px;
+        background-color: rgb(137, 116, 116);
+        width: 100%;
+        height: 20px;
+        display: flex;
+      }
+      input {
+        border: none;
+        background-color: rgb(137, 116, 116);
+        color: rgb(242, 221, 221);
+        position: relative;
+        height: 25px;
+        font-size: 20px;
+        width: 95%;
+        top: -3px;
+      }
+      ::placeholder {
+        color: rgb(183, 170, 170);
+      }
+      i {
+        color: white;
+
+        font-size: 25px;
+      }
+      #image {
+        width: auto;
+        height: 25px;
+        display: none;
+      }
+      .box {
+        width: 30px;
+
+        color: white;
+        display: flex;
+        justify-content: space-between;
+
+        width: 95%;
+        margin-top: 25px;
+      }
+      h4:hover {
+        color: rgb(241, 238, 103);
+      }
+      body > i:first-child {
+        font-size: 50px;
+
+        position: absolute;
+        top: 25px;
+        right: 65px;
+        color: rgb(241, 238, 103);
+      }
+    </style>
+    <script
+      src="https://kit.fontawesome.com/e99a9eb445.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <i class="fa-solid fa-volume-xmark"></i>
+    <img
+      src="https://www.freepnglogos.com/uploads/star-wars-logo-png-8.png"
+      alt=""
+    />
+
+    <div id="searchbar">
+      <div id="input">
+        <input
+          type="text"
+          id="search"
+          placeholder="Search Characters"
+          oninput="debouncing(getData,1000)"
+        />
+        <i class="fa-brands fa-searchengin"></i>
+        <img
+          src="https://acegif.com/wp-content/uploads/loading-96.gif"
+          alt=""
+          id="image"
+        />
+      </div>
+      <p id="try"></p>
+      <div id="container"></div>
+    </div>
+  </body>
+</html>
+<script>
+  let sea = document.querySelector("i");
+  let image = document.getElementById("image");
+  let displayTable = (data) => {
+    console.log(data.results);
+    if (data.count > 4) {
+      document.getElementById("container").style.overflowY = "scroll";
+      document.getElementById("container").style.height = "250px";
+    } else {
+      document.getElementById("container").style.overflowY = "hidden";
+      document.getElementById("container").style.height = "auto";
+    }
+    document.getElementById("container").innerHTML = null;
+    data.results.forEach((el, index) => {
+      let box = document.createElement("div");
+      box.setAttribute("class", "box");
+      box.style.cursor = "pointer";
+      box.onclick = () => {
+        storeData(data.results, index);
+        window.location.href = "./person.html";
+      };
+      let h3 = document.createElement("h4");
+      h3.innerText = el.name;
+
+      let gender = document.createElement("p");
+
+      gender.innerText = el.gender;
+      let p = document.createElement("p");
+      p.innerText = el.birth_year;
+      p.style.color = "white";
+      p.style.fontSize = "13px";
+      p.style.marginBottom = "16px";
+      box.append(h3, gender);
+      document.getElementById("container").append(box, p);
+    });
+    document.querySelector("input").style.marginBottom = "20px";
+    document.querySelector("input").style.borderBottom =
+      "2px solid rgb(113, 220, 67)";
+  };
+  let getData = async () => {
+    let query = document.getElementById("search").value;
+    let data = await fetch(`https://swapi.dev/api/people/?search=${query}`);
+    data = await data.json();
+    console.log(query);
+    if (data.count === 0) {
+      document.getElementById("container").innerHTML = null;
+      document.getElementById("try").innerText =
+        "No results found. Try again...";
+      document.getElementById("try").style.color = "rgb(113, 220, 67)";
+      sea.style.display = "grid";
+      document.getElementById("image").style.display = "none";
+      document.getElementById("container").style.overflowY = "hidden";
+      document.getElementById("container").style.height = "auto";
+      document.querySelector("input").style.borderBottom = "none";
+    } else if (query === "") {
+      document.getElementById("container").innerHTML = null;
+      document.getElementById("try").innerText = null;
+      document.getElementById("image").style.display = "none";
+      sea.style.display = "grid";
+      document.getElementById("container").style.overflowY = "hidden";
+      document.getElementById("container").style.height = "auto";
+      document.querySelector("input").style.borderBottom = "none";
+    } else {
+      document.getElementById("try").innerText = null;
+      document.getElementById("image").style.display = "none";
+      sea.style.display = "grid";
+      displayTable(data);
+    }
+  };
+
+  let id;
+  let debouncing = (func, delay) => {
+    sea.style.display = "none";
+    image.style.display = "flex";
+    // document.getElementById("try").innerText = null;
+    // document.getElementById("container").style.overflowY = null;
+    // document.getElementById("container").style.overflowY = "hidden";
+    // document.getElementById("container").style.height = "auto";
+    if (id) {
+      clearTimeout(id);
+    }
+
+    id = setTimeout(() => {
+      func();
+    }, delay);
+  };
+  let storeData = (arr, ind) => {
+    console.log("i");
+    console.log(arr[ind]);
+    localStorage.setItem("heros", JSON.stringify(arr[ind]));
+  };
+  let flag = true;
+  let x;
+  document.querySelector("i").addEventListener("click", () => {
+    if (flag) {
+      flag = false;
+
+      document.querySelector("i").classList.remove("fa-volume-xmark");
+
+      document.querySelector("i").classList.add("fa-volume-off");
+      x = new Audio("./starwar.mp3");
+      x.play().repeat();
+      console.log(x.play());
+    } else {
+      flag = true;
+      document.querySelector("i").classList.remove("fa-volume-off");
+
+      document.querySelector("i").classList.add("fa-volume-xmark");
+      x.pause();
+    }
+  });
+</script>
