@@ -31,6 +31,8 @@ This website is a individual assignment, This is tell about star warriors. This 
 
 # Screenshots
 ## Landing Page
+<img src="https://github.com/sunnylalwani41/Star_War/blob/main/WebsiteScreenShot/Star_War_Landing_Page.PNG">
+
 <img src="WebsiteScreenShot/Star_War_Landing_Page.PNG">
 
 ## Search Functionality
