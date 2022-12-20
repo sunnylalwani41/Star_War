@@ -1,6 +1,6 @@
 # Star War Warriors
 
-This website is a individual assignment, This is tell about star warriors. This website is our assignment during the Masai curriculum https://incredible-crostata-a30249.netlify.app/star%20wars .
+This website is an individual assignment, This is tell about star warriors. This website is our assignment during the Masai curriculum https://incredible-crostata-a30249.netlify.app/star%20wars .
 
 
 ## Features
