@@ -1,6 +1,6 @@
 # Star War Warriors
 
-This website is an individual assignment, This is tell about star warriors. This website is our assignment during the Masai curriculum https://incredible-crostata-a30249.netlify.app/star%20wars .
+This website is an individual assignment, This is tell about star warriors. This website is our assignment during the Masai curriculum [Star War Website](https://incredible-crostata-a30249.netlify.app/star%20wars).
 
 
 ## Features
@@ -18,7 +18,7 @@ This website is an individual assignment, This is tell about star warriors. This
 - open terminal of your editor
 - use  --> git clone (paste link) <-- 
 - after project cloned to your folder
-- go to "star wars.html" inside homenavbar folder
+- go to "star wars.html" inside Star_War folder
 - open with live server
     
 ## Tech Stack
